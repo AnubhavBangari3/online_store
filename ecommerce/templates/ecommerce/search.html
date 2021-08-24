@@ -1,0 +1,30 @@
+{% extends 'ecommerce/main.html' %}
+
+{% block title %}{{search}} {% endblock %}
+
+{% block body %}
+<div class="text-nowrap bd-highlight my-3 mx-4" style="width:auto;">
+    <h4>You searched for <b>{{search}}.</b>Products similar to {{search}} are ...</h4>
+  </div>
+
+<div class="container" style=" display:flex;justify-content:ceneter;text-align:ceneter; flex-wrap:wrap;">
+    
+    {% if product %}
+    {% for p in product %}
+        <div class="card mx-2 my-4" style="width: 25rem;">
+            <img src="{{p.image.url}}" class="card-img-top" alt="..." style="height:100px;
+            width:150px; margin:0 auto;">
+            <div class="card-body">
+              <h1 class="card-title">{{p}}</h1>
+              <a href="{% url 'product' p.id %}"><button type="button" class="btn btn-outline-dark">View</button></a>
+
+            </div>
+        </div>
+          {% endfor %}
+    {% else %}
+<h4>NONE</h4>
+    {% endif %}
+    
+</div>
+ 
+{% endblock %}

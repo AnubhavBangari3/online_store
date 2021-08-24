@@ -1,0 +1,91 @@
+{% extends 'ecommerce/main.html' %}
+
+{% block title %}STORE {% endblock %}
+
+{% block body %}
+<header class="head my-4" style="width:60%; margin:0 auto;">
+    <form class="d-flex"  action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+        <input class="form-control me-2" name="search" id="search" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+</header>
+<div class="container">
+    <h1>SMARTPHONES</h1>
+    <div class="smartphones box">
+        
+        {% for p in smartphones %}
+    <div class="card mx-2 my-4">
+        <h>{{p.name}}</h>
+        <hr>
+        <div class="image"><img src="{{p.image.url}}" class="card-img-top" alt="..." style="height:100px;
+            width:150px;"></div>
+        <div class="card-body">
+            <b>Price:</b>${{p.price}}<br>
+
+            <hr><button data-product={{p.id}} data-action="add" type="button" class="btn btn-outline-primary update-cart">Add to cart</button>
+            <a href="{% url 'product' p.id %}"><button type="button" class="btn btn-outline-dark">View</button></a>
+        </div>
+    </div>
+    {% endfor %}
+
+    </div>
+    <hr>
+    <h1>TABLETS</h1>
+    <div class="tablets box">
+        {% for p in tablets %}
+    <div class="card mx-2 my-4">
+        <h>{{p.name}}</h>
+        <hr>
+        <div class="image"><img src="{{p.image.url}}" class="card-img-top" alt="..." style="height:100px;
+            width:150px;"></div>
+        <div class="card-body">
+            <b>Price:</b>${{p.price}}<br>
+
+            <hr><button data-product={{p.id}} data-action="add" type="button" class="btn btn-outline-primary update-cart">Add to cart</button>
+            <a href="{% url 'product' p.id %}"><button type="button" class="btn btn-outline-dark">View</button></a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h1>TELEVISIONS</h1>
+    <div class="television box">
+        {% for p in television %}
+    <div class="card mx-2 my-4">
+        <h>{{p.name}}</h>
+        <hr>
+        <div class="image"><img src="{{p.image.url}}" class="card-img-top" alt="..." style="height:100px;
+            width:150px;"></div>
+        <div class="card-body">
+            <b>Price:</b>${{p.price}}<br>
+
+            <hr><button data-product={{p.id}} data-action="add" type="button" class="btn btn-outline-primary update-cart">Add to cart</button>
+            <a href="{% url 'product' p.id %}"><button type="button" class="btn btn-outline-dark">View</button></a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <H1>SMARTWATCHES</H1>
+    <div class="smartwatches box">
+        {% for p in smartwatches %}
+    <div class="card mx-2 my-4">
+        <h>{{p.name}}</h>
+        <hr>
+        <div class="image"><img src="{{p.image.url}}" class="card-img-top" alt="..." style="height:100px;
+            width:150px;"></div>
+        <div class="card-body">
+            <b>Price:</b>${{p.price}}<br>
+            <hr><button data-product={{p.id}} data-action="add" type="button" class="btn btn-outline-primary update-cart">Add to cart</button>
+            <a href="{% url 'product' p.id %}"><button type="button" class="btn btn-outline-dark">View</button></a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    <hr>
+</div>
+
+
+{% endblock %}

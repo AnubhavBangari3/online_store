@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+
+}
+
+.smartphones{
+    display: flex;
+    flex-wrap: wrap;
+}
+.tablets{
+    display: flex;
+    flex-wrap: wrap;
+}
+.television{
+    display: flex;
+    flex-wrap: wrap;
+}
+.smartwatches{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width:300px;
+}
+.container-check{
+    width:100%;
+}

@@ -1,0 +1,146 @@
+{% extends 'ecommerce/main.html' %}
+
+{% block title %}CHECKOUT {% endblock %}
+
+{% block body %}
+<div class="container-check my-4">
+    <div class="row">
+        
+      <div class="col-6" style="width:50%; display:flex;flex-wrap:wrap;justify-content:center;">
+
+        <form id="form" class="form-control" style="width:100%; padding:10px 0px 20px 10px;">
+            <div id="user-info">
+              <input name="username" placeholder="Username" type="text" id="username">
+            <input type="email" name="email" placeholder="email" id="email">
+            </div>
+            <br><br>
+            <h4>SHIPPING ADDRESS</h4><hr><br>
+            <input type="text" name="address" placeholder="address" id="address">
+            <input type="text" name="city" placeholder="city" id="city">
+            <br><br>
+            <input type="text" name="country" placeholder="country" id="country">
+            <input type="text" placeholder="zip" name="zip" id="zip"> 
+            <br><br>
+            <button id="form-button" class="btn btn-success">Continue</button>
+        </form>
+        <div class="card" style="width: 100%;">
+          <div class="payment-info" id="payment-info" style="display:none;">
+            <small>Paytm</small>
+            <button id="make-payment" class="btn btn-success">Payment</button>
+          </div>
+        </div>
+        
+            </div>
+      <!--for seeing list of items-->
+      <div class="col-4" style="width:40%;">
+        <div class="card" style="width:100%;">
+            <a href="{% url 'cart' %}"><button class="btn btn-primary my-2">Back to cart</button></a>
+            <div class="card-body" style="display:flex;flex-wrap:wrap;">
+              <h2>ORDER SUMMARY</h2>
+              <hr>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+        
+                  <tr>
+                    <td><img src="{{item.product.image.url}}"/ style="height:50px;width:50px;"></td>
+                    <td>{{item.product.name}}</td>
+                    <td> {{item.quantity}}
+                      </td>
+                    <td>${{item.final_price}}</td>
+                   
+                  </tr>
+                  
+                  {% endfor %}
+                  
+                  
+                </tbody>
+            </table> 
+            <h6 style="padding-right:10px;"><b>ITEMS:{{order.get_total_item}}</b></h6>
+            <h6><b>TOTAL:${{order.get_total}}</b></h6>
+            </div>
+            
+          </div>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  var order='{{order.get_total}}';
+
+
+    if (user !="AnonymousUser"){
+    document.getElementById("user-info").style.display="none";
+    }
+    var form=document.getElementById('form');
+    form.addEventListener('submit',function(e){
+    e.preventDefault();
+    console.log('submit');
+    bshow();
+    })
+    
+    
+
+    function bshow(){
+      btn=document.getElementById('form-button');
+      p=document.getElementById('payment-info');
+      if (p.style.display ==='none' && btn.style.display ===""){
+        p.style.display="block";
+        btn.style.display="none";
+      }
+      
+    }
+    document.getElementById('make-payment').addEventListener('click',function(e){
+     
+      submitForm();
+    })
+    
+    function submitForm(){
+      console.log("payment made");
+    var userDetail={
+      'username':form.username.value,'email':form.email.value,'total':order
+    }
+
+    var shippingDetails={
+        'address':form.address.value,
+        'city':form.city.value,
+        'country':form.country.value,
+        'zip':form.zip.value,
+    }
+
+    var url='/process_order';
+    fetch(url,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body:JSON.stringify({
+        'userDetail':userDetail,
+        'shippingDetails':shippingDetails
+
+      })
+
+    })
+    .then((response) => response.json())
+    .then((data)=>{
+      console.log(data);
+      alert("Payement done!");
+      window.location.href="{% url 'store' %}";
+    })
+
+    }
+
+
+  </script>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'ecommerce/main.html' %}
+
+{% block title %}CART {% endblock %}
+
+{% block body %}
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+
+
+
+          <tr>
+            <td><img src="{{item.product.image.url}}"/ style="height:50px;width:50px;"></td>
+            <td>{{item.product.name}}</td>
+            <td><a href=""><i data-product="{{item.product.id}}" data-action="add"  class="fa fa-plus update-cart mx-2"></i></a> {{item.quantity}}
+               <a href=""><i data-product="{{item.product.id}}" data-action="remove"  class="fa fa-minus update-cart mx-2"></i></a></td>
+            <td>${{item.final_price}}</td>
+           
+          </tr>
+          
+          {% endfor %}
+          
+          
+        </tbody>
+        <div class="card my-4" style="width:inherit;">
+       
+          <div class="card-body" style="display:flex;flex-wrap:wrap;justify-content:space-between;">
+            
+            <b>ITEMS:{{order.get_total_item}}</b> <b>TOTAL:${{order.get_total}}</b>
+            <a href="{% url 'checkout' %}" class="btn btn-dark">Checkout</a>
+          </div>
+        </div>
+      </table>
+      
+      
+</div>
+
+{% endblock %}
